@@ -6,6 +6,7 @@ import com.dxjunkyard.rental.domain.RentalFlatten;
 import com.dxjunkyard.rental.domain.dto.RentalDto;
 import com.dxjunkyard.rental.domain.request.CheckInRequest;
 import com.dxjunkyard.rental.domain.request.RentalRequest;
+import com.dxjunkyard.rental.domain.request.ReservationRequest;
 import com.dxjunkyard.rental.domain.response.GetRentalResponse;
 import com.dxjunkyard.rental.repository.dao.mapper.RentalMapper;
 import org.slf4j.Logger;
@@ -49,6 +50,16 @@ public class RentalService {
         } catch (Exception e) {
             logger.info("error" + e.getMessage());
             return rentalList;
+        }
+    }
+
+    public void reserve(ReservationRequest request) {
+        try {
+            // todo: 各備品について、その日の在庫があるかどうかをチェックする必要がる
+            List<RentalFlatten> reservationList= RentalDto.reserve(request);
+            rentalMapper.addReservation(reservationList);
+        } catch (Exception e) {
+            logger.info("error" + e.getMessage());
         }
     }
 }

@@ -29,7 +29,7 @@ public class Controller {
         logger.info("rental API");
         try {
             // todo : parameter validation
-            // rentalService.addReservation(request);
+            rentalService.reserve(request);
             return NormalResponse.builder().result("OK").build();
         } catch (Exception e) {
             logger.debug("rental" + e.getMessage());

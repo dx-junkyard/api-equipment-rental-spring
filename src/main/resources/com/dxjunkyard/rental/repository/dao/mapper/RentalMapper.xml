@@ -3,9 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dxjunkyard.rental.repository.dao.mapper.RentalMapper">
-    <insert id="addRental">
-        insert into events(title,owner_id,time_from,time_to,comment,place_id,event_type)
-        values(#{title},#{ownerId},#{timeFrom},#{timeTo},#{comment},#{placeId},#{eventType})
+    <insert id="addReservation" parameterType="java.util.List">
+        insert into EquipmentReservations(
+                                          equipment_id
+                                          ,equipment_n
+                                          ,event_id
+                                          ,renter_id
+                                          ,start_date
+                                          ,end_date
+                                          ,usage_date
+                                          ,comment
+                                          ,status
+            ) values
+                     <foreach collection="reservationList" item="rl" separator=",">
+                     (
+                                          #{rl.equipmentId}
+                                          ,#{rl.equipmentN}
+                                          ,#{rl.eventId}
+                                          ,#{rl.renterId}
+                                          ,#{rl.startDate}
+                                          ,#{rl.endDate}
+                                          ,#{rl.usageDate}
+                                          ,#{rl.comment}
+                                          ,0
+                    )
+                    </foreach>
     </insert>
     <insert id="addIncludeSportRental">
         insert into IncludeSportRental(event_id,sport_event_id)

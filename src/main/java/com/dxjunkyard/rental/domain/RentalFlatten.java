@@ -1,11 +1,13 @@
 package com.dxjunkyard.rental.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 public class RentalFlatten {
     private Integer reservationId; // 予約id
     private Integer equipmentId; // 備品id
