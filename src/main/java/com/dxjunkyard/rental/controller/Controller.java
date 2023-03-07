@@ -40,15 +40,39 @@ public class Controller {
     /**
      * 
      */
-    @PostMapping("/check-in")
+    @GetMapping("/check-in")
     @ResponseBody
     public CheckInResponse checkIn(
-            @RequestBody CheckInRequest request){
+            @RequestParam("counterId") String counterId
+            ,@RequestParam("userId") String userId
+    ){
         logger.info("rental API");
         try {
             // todo : parameter validation
             return CheckInResponse.builder()
-                    .rentalList(rentalService.checkin(request))
+                    .rentalList(rentalService.checkin(counterId,userId))
+                    .status("OK")
+                    .build();
+        } catch (Exception e) {
+            logger.debug("rental" + e.getMessage());
+            return CheckInResponse.builder().status("NG").build();
+        }
+    }
+
+    /**
+     *
+     */
+    @GetMapping("/check-out")
+    @ResponseBody
+    public CheckInResponse checkOut(
+            @RequestParam("counterId") String counterId
+            ,@RequestParam("userId") String userId
+    ){
+        logger.info("rental API");
+        try {
+            // todo : parameter validation
+            return CheckInResponse.builder()
+                    .rentalList(rentalService.checkin(counterId,userId))
                     .status("OK")
                     .build();
         } catch (Exception e) {

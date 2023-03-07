@@ -1,25 +1,18 @@
 package com.dxjunkyard.rental.service;
 
 import com.dxjunkyard.rental.domain.Rental;
-import com.dxjunkyard.rental.domain.EquipmentRental;
 import com.dxjunkyard.rental.domain.RentalFlatten;
 import com.dxjunkyard.rental.domain.dto.RentalDto;
-import com.dxjunkyard.rental.domain.request.CheckInRequest;
-import com.dxjunkyard.rental.domain.request.RentalRequest;
 import com.dxjunkyard.rental.domain.request.ReservationRequest;
-import com.dxjunkyard.rental.domain.response.GetRentalResponse;
 import com.dxjunkyard.rental.repository.dao.mapper.RentalMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,15 +23,15 @@ public class RentalService {
     @Autowired
     RentalMapper rentalMapper;
 
-    public List<Rental> checkin(CheckInRequest request) {
+    public List<Rental> checkin(String counterId, String userId) {
         List<Rental> rentalList = new ArrayList<>();
         try {
             LocalDate today = LocalDate.now();
             LocalDateTime midnight = today.atStartOfDay();
             // カウンターID, 借り主のuserid, 貸出日付でレンタルする備品リストを取得
             List<Integer> reservationIdList = rentalMapper.getReservationIdList(
-                    request.getCounterId()
-                    , request.getUserId()
+                    counterId
+                    , userId
                     , midnight);
 
             for (Integer reservationId : reservationIdList) {
